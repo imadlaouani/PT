@@ -1,0 +1,23 @@
+ {% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="content-section">
+  <form method="post" action="">
+    {% csrf_token %}
+    
+    <fieldset class="form-group"> 
+      <legend class="border-bottom mb-4">Inscription
+      </legend>
+      {{form|crispy}}
+    </fieldset>
+      <button class="btn btn-outline-info" type="submit">S'incrire</button>
+    </div>
+  </form>
+<div class="border-top pt-3">
+            <small class="text-muted">
+                Vous avez déjà un compte ? <a class="ml-2" href="{% url 'comptes:connexion' %}">Se connecter</a>
+            </small>
+        </div>
+    </div>
+
+{% endblock %}

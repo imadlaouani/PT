@@ -1,0 +1,38 @@
+{{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<article class="media content-section">
+  <img class="rounded-circle article-img" src="{{ produit.vendeurFK.photoVendeur.url }}">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ produit.vendeurFK.nomVendeur }} {{ produit.vendeurFK.prenomVendeur }}</a>
+      <small class="text-muted">{{ produit.dateFin }}</small>
+      {% if produit.vendeurFK == user.vendeur %}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1"href="{% url 'produit_modifier' produit.numProduit %}">Modifier</a> 
+        <a class="btn btn-danger btn-sm mt-1 mb-1"href="{% url 'produit_supprimer' produit.numProduit %}">Supprimer</a> 
+      </div>
+
+
+      {% endif %}
+    </div>
+    <h2 class="article-title" >{{ produit.titre }}</h2>
+    <p class="article-content">{{ produit.description }}</p>
+    {% if images %}
+    <img  src="{{ produit.images.url }}" class="img-fluid">
+    {% endif %}
+  </div>
+</article>
+<form method="post">
+    {% csrf_token %}
+    
+    <fieldset class="form-group"> 
+      <legend class="border-bottom mb-4">Encherir
+      </legend>
+      {{form|crispy}}
+    </fieldset>
+      <button class="btn btn-outline-info" type="submit">J'encheris</button>
+    </div>
+  </form>
+
+{% endblock content %}

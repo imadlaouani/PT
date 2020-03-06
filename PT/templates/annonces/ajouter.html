@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<form enctype="multipart/form-data" class = "site-form"action = "/annonces/ajouter/" method="post" >{% csrf_token %}
+	{{ form.as_p }}
+
+	<button type="submit">Ajouter l'annoce</button>
+</form>
+
+{% endblock %}

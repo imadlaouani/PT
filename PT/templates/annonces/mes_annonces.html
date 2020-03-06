@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+{%  for produit in listeProduits %}
+ <li>{{produit.titre}}</li>
+ <li>{{produit.description}}</li>
+ <li>{{produit.prixBase}}</li>
+ <li>{{produit.dateDebut}}</li>
+ <li>{{produit.dateFin}}</li>
+ <a href="/annonces/encherir/{{produit.numProduit}}">encherir</a>
+
+{% endfor %}
+{% endblock %}
