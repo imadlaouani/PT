@@ -25,7 +25,7 @@ SECRET_KEY = 'ub&stsxeos=@%lnoq1@$28*jc=^o0%t$)k&$d%-uet@+=$*8$4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = []
 
 
 # Application definition
