@@ -12,7 +12,7 @@ class Vendeur(models.Model):
     nomVendeur = models.CharField(max_length=30)
     prenomVendeur = models.CharField(max_length=30)
     mailVendeur = models.EmailField()
-    photoVendeur = models.ImageField(default= 'default.png',upload_to= "photosdeprofil")
+    photoVendeur = models.ImageField(default= 'default.jpg',upload_to= "photosdeprofil")
 
     def __str__(self):
         return f'{self.numVendeur.username} Vendeur' 
@@ -37,7 +37,7 @@ class Acheteur(models.Model):
     prenomAcheteur = models.CharField(max_length=30)
     mailAcheteur = models.EmailField()
     adresseAcheteur = models.TextField(null=True)
-    photoAcheteur = models.ImageField(default= 'default.png',upload_to= "photosdeprofil")
+    photoAcheteur = models.ImageField(default= 'default.jpg',upload_to= "photosdeprofil",blank = True)
 
     def __str__(self):
         return f'{self.numAcheteur.username} Acheteur' 
@@ -45,7 +45,6 @@ class Acheteur(models.Model):
 
 class Produit(models.Model):
     Categorie_choices = [
-    ('Emploi', 'Emploi'),
     ('Véhicules', 'Véhicules'),
     ('Vacances', 'Vacances'),
     ('Loisirs', 'Loisirs'),
@@ -57,7 +56,7 @@ class Produit(models.Model):
     numProduit = models.AutoField(primary_key=True)
     titre = models.CharField(max_length=30)
     description = models.TextField(verbose_name="Description du produit")
-    images = models.ImageField(blank=True, null=True,upload_to= "images", height_field=None)
+    images = models.ImageField(upload_to= "images", height_field=None)
     prixBase =  models.FloatField(validators=[MinValueValidator(0)],verbose_name="Mise à prix")
     totalEnchere =  models.FloatField(null=True,default=0,validators=[MinValueValidator(0)])
     dateDebut = models.DateTimeField(default=timezone.now, verbose_name="Date de début de l'enchère")

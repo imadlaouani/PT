@@ -57,7 +57,7 @@ class UserUpdateForm(forms.ModelForm):
 
 # Formulaire d'inscription
 class InscriptionForm(UserCreationForm):
-    photo = forms.ImageField(required = False)
+    photo = forms.ImageField(required=False)
     adresse = forms.CharField(widget=forms.Textarea,required=False)
     class Meta:
         model = User

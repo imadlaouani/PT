@@ -45,27 +45,3 @@ def home(request):
 
 
 
-
-
-def inscription(request):
-    error = False
-
-    if request.method == "POST":
-        form = AcheteurForm(request.POST)
-        form.save()
-        if form.is_valid():
-            #On inscrit l'acheteur
-            acheteur = Acheteur(nomAcheteur=form.cleaned_data['last_name'], prenomAcheteur=form.cleaned_data['first_name'],mailAcheteur = form.cleaned_data['email'],adresseAcheteur = form.cleaned_data['adresseAcheteur'])
-            acheteur.save()
-            # On le connecte
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password1"]
-            user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
-            login(request, authenticate(username=username, password=password))  # nous connectons l'utilisateur
-            
-    else:
-        form = AcheteurForm()
-
-    return render(request, 'inscription.html', locals())
-
-

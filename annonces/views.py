@@ -1,7 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
-
 from PT.forms import ProduitForm,EnchereForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
@@ -9,6 +6,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import PermissionDenied
 from PT.models import *
+from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.files.storage import FileSystemStorage
 from django.views.generic import (
@@ -21,14 +19,6 @@ from django.views.generic import (
 
 
 
-
-"""
-class ProduitDetailView(DetailView):
-    model = Produit
-    template_name = 'annonces/produit_detail.html'
-    context_object_name = 'produit'
-
-   """ 
 
 
 class ProduitCreateView(LoginRequiredMixin, CreateView):
@@ -70,33 +60,7 @@ class ProduitDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 
-
-
-
-def ajouter_annonce(request):
-    """if !(request.session['estEtu']):
-        return render(request, 'error404.html')
-    else:"""
-    if request.method == 'POST':
-        utilisateur = User.objects.get(id=request.user.id)
-        form = ProduitForm(request.POST,request.FILES)
-        if form.is_valid():
-            vendeur = Vendeur.objects.get(numVendeur=request.user)
-            produit = Produit(titre=form.cleaned_data["titre"],description = form.cleaned_data["description"],images = request.FILES['images'],prixBase = form.cleaned_data["prixBase"],dateDebut = form.cleaned_data["dateDebut"],dateFin=form.cleaned_data["dateFin"],vendeurFK=vendeur,categorie = form.cleaned_data["categorie"])
-            produit.save()
-            return redirect('home')
-    else:
-        form = ProduitForm()
-    return render(request, 'annonces/ajouter.html', locals())
-
-def upload(request):
-    if request.method == 'POST':
-        image = request.FILES['images']
-        photo = FileSystemStorage()
-        photo.save(image.name,image)
-
-    return render(request,'annonces/upload.html')
-
+@login_required
 def mes_annonces(request):
     # On récupère tous les produits d'un vendeur
     vendeur = Vendeur.objects.get(numVendeur=request.user)
@@ -118,7 +82,7 @@ def produit_detail(request,pk):
 
     return render(request, 'annonces/produit_detail.html',{'produit':produit,'encheres':encheres})
 
-
+@login_required
 def encherir(request,pk):
     produit = Produit.objects.get(numProduit=pk)
     if produit.dateFin>= timezone.now():
@@ -136,3 +100,37 @@ def encherir(request,pk):
             form = EnchereForm(request.POST)
             return render(request, 'annonces/produit_encherir.html', locals())
 
+
+def filtre_categorie(request, categorie):
+   
+    produits = []
+    if categorie == "Véhicules":
+        for i in Produit.objects.filter(dateFin__gte=timezone.now(), categorie="Véhicules"):
+            produits.append(i)
+
+    elif categorie == "Vacances":
+        for i in Produit.objects.filter(dateFin__gte=timezone.now(), categorie="Vacances").order_by('dateFin'):
+            produits.append(i)
+
+    elif categorie == "Loisirs":
+        for i in Produit.objects.filter(dateFin__gte=timezone.now(), categorie="Loisirs").order_by('dateFin'):
+            produits.append(i)
+
+    elif categorie == "Mode":
+        for i in Produit.objects.filter(dateFin__gte=timezone.now(), categorie="Mode").order_by('dateFin'):
+            produits.append(i)
+
+    elif categorie == "Multimédia":
+        for i in Produit.objects.filter(dateFin__gte=timezone.now(), categorie="Multimédia").order_by('dateFin'):
+            produits.append(i)
+
+    elif categorie == "Maison":
+        for i in Produit.objects.filter(dateFin__gte=timezone.now(), categorie="Maison").order_by('dateFin'):
+            produits.append(i)
+
+    elif categorie == "Autre":
+        for i in Produit.objects.filter(dateFin__gte=timezone.now(), categorie="Autre").order_by('dateFin'):
+            produits.append(i)
+
+    
+    return render(request, 'annonces/produits_categorie.html', {'produits': produits})
