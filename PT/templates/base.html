@@ -24,7 +24,22 @@
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
 						<a class="nav-item nav-link" href=" {% url 'home'%}">Accueil</a>
-						<a class="nav-item nav-link" href="{% url 'liste_produits' %}">Les annonces</a>
+						<a class="nav-item nav-link" href=" {% url 'mes_annonces'%}">Mes annonces</a>
+						<div class="dropdown">
+							<a class="btn  nav-item nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Annonces
+							</a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="{% url 'liste_produits' %}">Toutes les annonces</a>
+								<a class="dropdown-item" href="{% url 'produits_categorie' 'Maison' %}">Maison</a>
+								<a class="dropdown-item" href="{% url 'produits_categorie' 'Mode' %}">Mode</a>
+								<a class="dropdown-item" href="{% url 'produits_categorie' 'Multimédia' %}">Multimédia</a>
+								<a class="dropdown-item" href="{% url 'produits_categorie' 'Loisirs' %}">Loisirs</a>
+								<a class="dropdown-item" href="{% url 'produits_categorie' 'Vacances' %}">Vacances</a>
+								<a class="dropdown-item" href="{% url 'produits_categorie' 'Véhicules' %}">Véhicules</a>
+								<a class="dropdown-item" href="{% url 'produits_categorie' 'Autres' %}">Autres</a>
+							</div>
+						</div>
 						{% if user.is_authenticated %}
 					<a class="nav-item nav-link" href="{% url 'produit_ajouter' %}">Ajouter une annonce</a>
 					{% endif %}

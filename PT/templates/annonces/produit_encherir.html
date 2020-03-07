@@ -5,7 +5,7 @@
   <img class="rounded-circle article-img" src="{{ produit.vendeurFK.photoVendeur.url }}">
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="#">{{ produit.vendeurFK.nomVendeur }} {{ produit.vendeurFK.prenomVendeur }}</a>
+      <a class="mr-2">{{ produit.vendeurFK.nomVendeur }} {{ produit.vendeurFK.prenomVendeur }}</a>
       <small class="text-muted">{{ produit.dateFin }}</small>
       {% if produit.vendeurFK == user.vendeur %}
       <div>

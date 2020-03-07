@@ -3,38 +3,50 @@
 {% extends "base.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
-<article class="media content-section">
-  <img class="rounded-circle article-img" src="{{ produit.vendeurFK.photoVendeur.url }}">
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2" >{{ produit.vendeurFK.nomVendeur }} {{ produit.vendeurFK.prenomVendeur }}</a>
-      <div><a class="mr-1">Mise à Prix :{{produit.prixBase}}  Prix actuel : {{ produit.prixBase|add:produit.totalEnchere }}</a></div>
-      <small class="text-muted">Date de fin de l'enchère : {{ produit.dateFin }}</small>
-      {% if produit.vendeurFK == user.vendeur %}
-      <div>
-        <a class="btn btn-secondary btn-sm mt-1 mb-1"href="{% url 'produit_modifier' produit.numProduit %}">Modifier</a> 
-        <a class="btn btn-danger btn-sm mt-1 mb-1"href="{% url 'produit_supprimer' produit.numProduit %}">Supprimer</a> 
+
+    <div class="card">
+
+      <div class="card-body">
+        <small class="text-muted float-right">{{ produit.vendeurFK.prenomVendeur }} {{ produit.vendeurFK.nomVendeur }}</small>
+          <img class="rounded-circle float-right article-img" src="{{ produit.vendeurFK.photoVendeur.url }}">
+                  <h1 class="card-title">{{ produit.titre }}</h1>
+        <div><p>Mise à Prix : <s> {{produit.prixBase}} € </s> </p>
+          <h4>  Prix actuel : <span class="badge badge-success"> {{ produit.prixBase|add:produit.totalEnchere }} €</span></h4></div>
+          
+          <p class="card-text">{{ produit.description }}</p>
+          <p class="card-text"><small class="text-muted">Date de fin de l'enchère : {{ produit.dateFin }}</small></p>
+        </div>
+        <div class="text-center"> 
+          <img src="{{ produit.images.url }}" class=" img-fluid" alt="Responsive image">
+        </div>
+      </div>
+      <div class = "text-center">
+        <a href="{% url 'produit_encherir' produit.numProduit %}"><button class="btn btn-info mt-3" >Encherir</button></a>
       </div>
 
 
+      {% if produit.vendeurFK == user.vendeur %}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1"href="{% url 'produit_modifier' produit.numProduit %}">Modifier</a> <a class="btn btn-danger btn-sm mt-1 mb-1"href="{% url 'produit_supprimer' produit.numProduit %}">Supprimer</a></div>
+
+
       {% endif %}
-    </div>
-    <h2 class="article-title" >{{ produit.titre }}</h2>
-    <p class="article-content">{{ produit.description }}</p>
-    {% if images %}
-    <img  src="{{ produit.images.url }}" class="img-fluid">
-    {% endif %}
-    <div>
-      <a class="btn btn-outline-secondary" href="{% url 'produit_encherir' produit.numProduit %}">Encherir</a>
+
+
+      {% for i in encheres %}
+
+
+      <article class="media content-section mt-3">
+  <img class="rounded-circle article-img" src="{{ i.acheteurFK.photoAcheteur.url }}">
+  <div class="media-body">
+    <div class="article-metadata">
+     <p class="mr-2" >{{ i.acheteurFK.nomAcheteur }} {{ i.acheteurFK.prenomAcheteur}} a enchérit {{i.montant}}€</p>
+     <p class="mr-1">"{{i.commentaire}}"</p>
     </div>
   </div>
 </article>
+          
+      {% endfor %}
 
-{% for i in encheres %}
-<div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2" >{{ i.acheteurFK.nomAcheteur }} {{ i.acheteurFK.prenomAcheteur}} a enchérit {{i.montant}}</a>
-      <div><a class="mr-1">"{{i.commentaire}}"</a></div>
-{% endfor %}
 
 {% endblock content %}

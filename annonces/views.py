@@ -79,8 +79,9 @@ def produit_detail(request,pk):
     encheres =[]
     for i in Enchere.objects.filter(produitFK=pk):
         encheres.append(i)
+    temps_restant = produit.dateFin - timezone.now()
 
-    return render(request, 'annonces/produit_detail.html',{'produit':produit,'encheres':encheres})
+    return render(request, 'annonces/produit_detail.html',{'produit':produit,'encheres':encheres,'temps_restant':temps_restant})
 
 @login_required
 def encherir(request,pk):
@@ -102,6 +103,7 @@ def encherir(request,pk):
 
 
 def filtre_categorie(request, categorie):
+    # fonction qui prendre en paramètre un nom de categorie et renvoie les annonces associées
    
     produits = []
     if categorie == "Véhicules":

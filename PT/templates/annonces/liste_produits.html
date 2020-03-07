@@ -1,8 +1,6 @@
-{{% extends "base.html" %}
+{% extends "base.html" %}
 {% block content %}
 {% for produit in produits %}
-
-
 
 <div class="card mb-3 mw-75" style="max-width: 540px;">
   <div class="row no-gutters">
@@ -13,7 +11,7 @@
       <img class="rounded-circle float-right article-img mt-3" src="{{ produit.vendeurFK.photoVendeur.url }}">
       <div class="card-body">
         <h5 class="card-title" ><a href="{%  url 'produit_detail' produit.numProduit %}">{{ produit.titre }}</a></h5>
-        <p class="card-text overflow-hidden">{{ produit.description }}</p>
+        <p class="card-text overflow-hidden"></p>
         <p class="card-text"><small class="text-muted">Fin de l'enchère: {{ produit.dateFin }}</small></p>
       </div>
     </div>

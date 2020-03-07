@@ -2,38 +2,91 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  {% for i in mes_annonces %}
-<article class="media content-section">
-	<img class="rounded-circle article-img" src="{{ i.images.url }}">
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2" > En vente actuellement  {{ i.prixBase|add:i.totalEnchere}} !</a>
-      <small class="text-muted"></small>
+{% if mes_annonces %}
+<h3>Mes annonces :</h3>
+  {% for produit in mes_annonces %}
+
+
+<div class="card mb-3 mw-75 mt-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{ produit.images.url }}" class="card-img">
+    </div>
+    <div class="col-md-8">
+      <img class="rounded-circle float-right article-img mt-3" src="{{ produit.vendeurFK.photoVendeur.url }}">
+      <div class="card-body">
+        <h5 class="card-title" ><a href="{%  url 'produit_detail' produit.numProduit %}">{{ produit.titre }}</a></h5>
+        <p class="card-text overflow-hidden"></p>
+        <p class="card-text"><small class="text-muted">Fin de l'enchère: {{ produit.dateFin }}</small></p>
+      </div>
     </div>
   </div>
-</article>
+</div>
+
+
 {% endfor %}
-{% for j in ventes %}
-<article class="media content-section">
-  <img class="rounded-circle article-img" src="{{ j.images.url }}">
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2" > Vendu  {{ j.prixBase}} !</a>
-      <small class="text-muted"></small>
+{% endif %}
+{% if ventes %}
+<h3>Mes ventes :</h3>
+{% for produit in ventes %}
+<div class="card mb-3 mw-75" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{ produit.images.url }}" class="card-img">
+    </div>
+    <div class="col-md-8">
+      <img class="rounded-circle float-right article-img mt-3" src="{{ produit.vendeurFK.photoVendeur.url }}">
+      <div class="card-body">
+        <h5 class="card-title" ><a href="{%  url 'produit_detail' produit.numProduit %}">{{ produit.titre }}</a></h5>
+        <p class="card-text overflow-hidden"></p>
+        <p class="card-text"><small class="text-muted">Fin de l'enchère: {{ produit.dateFin }}</small></p>
+      </div>
     </div>
   </div>
-</article>
+</div>
 {% endfor %}
-{% for k in invendus %}
-<article class="media content-section">
-  <img class="rounded-circle article-img" src="{{ k.images.url }}">
-  <div class="media-body">
-    <div class="article-metadata">
-      <a class="mr-2" > Invendu  {{ k.prixBase}} !</a>
-      <small class="text-muted"></small>
+{% endif %}
+{% if invendus%}
+<h3>Mes produits invendus :</h3>
+{% for produit in invendus %}
+<div class="card mb-3 mw-75" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{ produit.images.url }}" class="card-img">
+    </div>
+    <div class="col-md-8">
+      <img class="rounded-circle float-right article-img mt-3" src="{{ produit.vendeurFK.photoVendeur.url }}">
+      <div class="card-body">
+        <h5 class="card-title" ><a href="{%  url 'produit_detail' produit.numProduit %}">{{ produit.titre }}</a></h5>
+        <p class="card-text overflow-hidden"></p>
+        <p class="card-text"><small class="text-muted">Fin de l'enchère: {{ produit.dateFin }}</small></p>
+      </div>
     </div>
   </div>
-</article>
+</div>
 {% endfor %}
+{% endif %}
+
+{% if encheres_gagnes %}
+<h3>Mes enchères remportées :</h3>
+{% for produit in encheres_gagnes %}
+<div class="card mb-3 mw-75" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{ produit.images.url }}" class="card-img">
+    </div>
+    <div class="col-md-8">
+      <img class="rounded-circle float-right article-img mt-3" src="{{ produit.vendeurFK.photoVendeur.url }}">
+      <div class="card-body">
+        <h5 class="card-title" ><a href="{%  url 'produit_detail' produit.numProduit %}">{{ produit.titre }}</a></h5>
+        <p class="card-text overflow-hidden"></p>
+        <p class="card-text"><small class="text-muted">Fin de l'enchère: {{ produit.dateFin }}</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
       {% endif %}
 {% endblock content %}

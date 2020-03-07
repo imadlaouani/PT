@@ -17,7 +17,7 @@ def home(request):
     ventes = []
     invendus = []
     produits_encheris=[]
-    enchere_gagnees =[]
+    encheres_gagnees =[]
     encheres = []
     if request.user.is_authenticated:
         # Pour un vendeur ses ventes
@@ -32,14 +32,9 @@ def home(request):
         # Pour un acheteur ses encheres remportées       
         for a in Produit.objects.filter(acheteurFK=request.user.acheteur,dateFin__lte=timezone.now()):
             enchere_gagnees.append(a)
-        # ses encheres
+        # les produits auxquels il a enchéri
         for c in Enchere.objects.filter(acheteurFK=request.user.acheteur):
             encheres.append(c.produitFK)
-
-        # ensemble des produits auxquels l'acheteur a enchéris et dont l'enchère est terminée 
-        """for k in range(0,len(encheres)):
-            for b in Produit.objects.filter(numProduit=encheres[k],dateFin__lte=timezone.now()):
-                produits_encheris.append(b)"""
 
     return render(request, 'home.html',locals())
 
