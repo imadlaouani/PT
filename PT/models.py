@@ -17,8 +17,11 @@ class Vendeur(models.Model):
     def __str__(self):
         return f'{self.numVendeur.username} Vendeur' 
 
-    def save(self):
-        super().save()
+    class Meta:
+        db_table ='vendeur'
+
+"""def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
 
         img = Image.open(self.photoVendeur.path)
 
@@ -26,9 +29,8 @@ class Vendeur(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.photoVendeur.path)
-
-    class Meta:
-        db_table ='vendeur'
+"""
+    
 
 
 class Acheteur(models.Model):
@@ -41,7 +43,6 @@ class Acheteur(models.Model):
 
     def __str__(self):
         return f'{self.numAcheteur.username} Acheteur' 
-
 
 class Produit(models.Model):
     Categorie_choices = [
@@ -66,11 +67,14 @@ class Produit(models.Model):
     categorie = models.CharField(max_length=30, choices=Categorie_choices)
 
     def __str__(self):
-        return f'{self.titre}' 
+        return f'{self.titre}'
 
-    def save(self):
+    def get_absolute_url(self):
+        return reverse('produit_detail', kwargs={'pk': self.pk})
+        
+""" def save(self,*args,**kwargs):
         if self.images:
-            super().save()
+            super().save(*args,**kwargs)
 
             img = Image.open(self.images.path)
 
@@ -78,9 +82,8 @@ class Produit(models.Model):
                 output_size = (300, 300)
                 img.thumbnail(output_size)
                 img.save(self.images.path)
-
-    def get_absolute_url(self):
-        return reverse('produit_detail', kwargs={'pk': self.pk})
+"""
+    
 
 
 class Enchere(models.Model):

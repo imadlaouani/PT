@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% if produits %}
 {% for produit in produits %}
 
 <div class="card mb-3 mw-75" style="max-width: 540px;">
@@ -19,4 +20,5 @@
 </div>
 
 {% endfor %}
+{% endif %}
 {% endblock content %}

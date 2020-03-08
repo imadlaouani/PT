@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['monenchere.herokuapp.com']
 
-
+#
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'comptes',
     'annonces',
     'crispy_forms',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -121,10 +122,23 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT =os.path.join(BASE_DIR,'media')
 MEDIA_URL = "/media/"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-django_heroku.settings(locals())
+
+
+
+AWS_ACCESS_KEY_ID = "AKIAQJ6BLBKFNXNZYYYY"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "monenchere-files"
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+
+#django_heroku.settings(locals())

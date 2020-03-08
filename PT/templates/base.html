@@ -24,8 +24,10 @@
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
 						<a class="nav-item nav-link" href=" {% url 'home'%}">Accueil</a>
+						{% if user.is_authenticated %}
 						<a class="nav-item nav-link" href=" {% url 'mes_annonces'%}">Mes annonces</a>
 						<div class="dropdown">
+							{% endif %}
 							<a class="btn  nav-item nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Annonces
 							</a>
